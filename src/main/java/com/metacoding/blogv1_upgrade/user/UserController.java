@@ -17,25 +17,33 @@ public class UserController {
 
 
     @GetMapping("/join-form")
-    public String joinForm(){
+    public String joinForm() {
         return "user/join-form";
     }
 
     @PostMapping("/join")
-    public String join(UserRequest.JoinDTO joinDTO){
+    public String join(UserRequest.JoinDTO joinDTO) {
         userService.회원가입(joinDTO);
         return "redirect:user/login-form";
     }
 
     @GetMapping("/login-form")
-    public String loginForm(){
+    public String loginForm() {
         return "user/login-form";
     }
 
     @PostMapping("/login")
-    public String login(UserRequest.LoginDTO loginDTO){
+    public String login(UserRequest.LoginDTO loginDTO) {
         User sessionUser = userService.로그인(loginDTO);
         session.setAttribute("sessionUser", sessionUser);
         return "redirect:/";
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate();
+        return "redirect:/";
+    }
+
+
 }
